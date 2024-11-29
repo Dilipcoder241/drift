@@ -16,7 +16,9 @@ router.post("/login" , [
     body('password').isLength({min:3}).withMessage("password should be atleast")
 ] , userController.loginUser);
 
-router.get('/profile' , authMiddleware.authUser , userController.getProfile)
+router.get('/profile' , authMiddleware.authUser , userController.getProfile);
+
+router.get('/logout' , authMiddleware.authUser , userController.logout);
 
 
 

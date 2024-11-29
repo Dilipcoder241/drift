@@ -47,3 +47,33 @@ The request body should contain the following data in JSON format:
     - `name`(string, required) : user name minimum 3 characters.
     - `email`(string, required) : user email.
     - `password`(string, require) : user password minimum 3 characters.
+
+### 3. User Profile
+
+- **Endpoint**: `GET /user/profile`
+- **Description**: Retrieves the profile information of the currently authenticated user.
+- **HTTP Method**: `GET`
+
+#### Request Body
+
+Requires a valid JWT token in the Authorization header.
+
+#### Example Response 
+
+- `user`(object):
+    - `name`(string, required) : user name minimum 3 characters.
+    - `email`(string, required) : user email.
+
+### 4. User Logout
+
+- **Endpoint**: `GET /user/logout`
+- **Description**: Logout the currently authenticated user.
+- **HTTP Method**: `GET`
+
+#### Request Body
+
+Requires a valid JWT token in the Authorization header.
+
+#### Example Response 
+
+A simple messade logout successful

@@ -1,6 +1,6 @@
 const userModel = require('../models/user.model');
 const { validationResult } = require("express-validator");
-const { createUser } = require('../services/user.services');
+const { createUser } = require('../services/user.service');
 const blacklistModel = require('../models/blacklist.model');
 
 
@@ -12,6 +12,11 @@ module.exports.registerUser = async (req ,res) => {
     }
 
     const { name , email , password } = req.body;
+
+    const existUser = userModel.findOne({email});
+    if(existUser){
+        res.status(400).json({message:"user already exist"});
+    }
 
     const hashPassword = await userModel.hashPassword(password);
 
@@ -57,5 +62,5 @@ module.exports.logout = async(req , res)=>{
 
     res.clearCookie('token');
 
-    res.status(200).json("logout success");
+    res.status(200).json({message: "Logged out successfully"});
 }

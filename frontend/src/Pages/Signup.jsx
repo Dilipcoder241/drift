@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {userDataContext} from '../Context/UserContext';
 
 function Signup() {
-    const [userData, setUserData] = useState("")
+    const navigate = useNavigate();
+    const {setUserData} = useContext(userDataContext);
     
-    const handleSubmit = (e)  =>{
+    const handleSubmit = async (e)  =>{
         e.preventDefault();
         const formData = new FormData(e.target);
         const obj = Object.fromEntries(formData.entries());
-        setUserData(obj);
+        const data = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, obj);
+        if(data.status = 200){
+            setUserData(data.data.user);
+            navigate("/home");
+        }
+        
         e.target.reset();
     }
   return (

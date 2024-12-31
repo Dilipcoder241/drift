@@ -15,19 +15,20 @@ function UserProtectedWrapper({children}) {
         if(!token){
             navigate('/login');
         }
-    }, [])
+        
+        axios.get(`${import.meta.env.VITE_BASE_URL}/user/profile` , 
+            {headers: {
+            'Authorization': `Barer ${token}`
+        }}).then(res=>{
+            if(res.status == 200){
+                setUserData(res.data.user)
+            }
+        }).catch(err=>{
+            localStorage.removeItem('token');
+            navigate("/login");
+        })
+    }, [token])
     
-    axios.get(`${import.meta.env.VITE_BASE_URL}/user/profile` , 
-        {headers: {
-        'Authorization': `Barer ${token}`
-    }}).then(res=>{
-        if(res.status == 200){
-            setUserData(res.data.user)
-        }
-    }).catch(err=>{
-        localStorage.removeItem('token');
-        navigate("/login");
-    })
 
 
   return (
